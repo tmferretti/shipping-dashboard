@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_09_220103) do
+ActiveRecord::Schema.define(version: 2019_02_09_233352) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,9 @@ ActiveRecord::Schema.define(version: 2019_02_09_220103) do
     t.string "country"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "latitude"
+    t.decimal "longitude"
+    t.index ["latitude", "longitude"], name: "index_addresses_on_latitude_and_longitude"
   end
 
   create_table "line_items", force: :cascade do |t|
