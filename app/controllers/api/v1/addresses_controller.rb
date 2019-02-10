@@ -6,9 +6,11 @@ module API
       expose(:address) { Address.find(params[:id]) }
 
       def index
+        render 'index.json.jbuilder'
       end
 
       def show
+        render 'show.json.jbuilder'
       end
 
       def update

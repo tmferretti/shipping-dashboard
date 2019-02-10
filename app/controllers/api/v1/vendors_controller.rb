@@ -5,9 +5,11 @@ module API
       expose(:vendor) { Vendor.find(params[:id]) }
 
       def index
+        render 'index.json.jbuilder'
       end
 
       def show
+        render 'show.json.jbuilder'
       end
 
       def create

@@ -5,9 +5,11 @@ module API
       expose(:line_item) { LineItem.find(params[:id]) }
 
       def index
+        render 'index.json.jbuilder'
       end
 
       def show
+        render 'show.json.jbuilder'
       end
 
       def create
