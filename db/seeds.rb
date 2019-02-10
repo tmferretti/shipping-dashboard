@@ -21,4 +21,20 @@ valid_addresses.in_groups_of(33, false).each do |group|
   vendor.industry = Faker::Company.industry
   vendor.logo = Faker::Company.logo
   vendor.save
+
+  group.each do |valid_address|
+    address = Address.new
+    address.first_name = Faker::Name.first_name
+    address.last_name = Faker::Name.last_name
+    address.address1 = valid_address[:address1]
+    address.address2 = valid_address[:address2]
+    address.city = valid_address[:city]
+    address.zipcode = valid_address[:postalCode]
+    address.phone = generate_clean_phone_number
+    address.alternative_phone = generate_clean_phone_number
+    address.company = vendor.name
+    address.state = valid_address[:state]
+    address.country = "USA" # for now, the valid address file only has US data, Im downloading a global one, but its massive (10GB) and will need to be parsed because *I think* I dont need that many addresses for this
+    address.vendor = vendor
+  end
 end
