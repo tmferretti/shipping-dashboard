@@ -59,6 +59,36 @@ valid_addresses.in_groups_of(33, false).each do |group|
   1_000.times do
     order = Order.new
     order.shipment_state = generate_shipment_state
+
+    # create line_items for order
+    rand(1..5).times do
+      line_item = LineItem.new
+      line_item.order = order
+      line_item.product_name = Faker::Commerce.product_name
+      line_item.price = Faker::Commerce.price.to_d
+    end
+
+    # create shipment for order
+    shipment = Shipment.new
+    shipment.addresses << vendor.addresses.sample
+
+    case order.shipment_state
+      when "shipped"
+        # in the future
+        reference_date = Faker::Date.between(3.days.from_now, Date.today)
+      when "pending_shipment"
+        # in the future
+        reference_date = Faker::Date.between(6.days.from_now, Date.today)
+      when "delivered"
+        # in the past
+        reference_date = Faker::Date.between(100.days.ago, Date.today)
+        shipment.delivered_at = reference_date + rand(-3..3).days
+    end
+
+    shipment.est_arrival_date = reference_date
+    shipment.shipped_at = reference_date - rand(2..5).days
+
+    order << shipment if shipment.save
     order.save
   end
 end
