@@ -37,7 +37,7 @@ valid_addresses.in_groups_of(33, false).each do |group|
   vendor.logo = Faker::Company.logo
   vendor.save
   
-  # create address for vendor
+  # create addresses for vendor
   group.each do |valid_address|
     address = Address.new
 
