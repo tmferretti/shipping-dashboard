@@ -80,10 +80,13 @@ valid_addresses.in_groups_of(33, false).each do |group|
     rand(1..5).times do
       line_item = LineItem.new
 
-      line_item.order = order
+      # line_item.order = order
       line_item.product_name = Faker::Commerce.product_name
       line_item.price = Faker::Commerce.price.to_d
+      order.line_items << line_item
 
+      order.update_totals
+      order.save!
       line_item.save!
     end
 
