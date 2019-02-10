@@ -10,3 +10,15 @@ Shipment.delete_all
 # load file of valid addresses
 addresses_json = ActiveSupport::JSON.decode(File.read('db/valid_addresses.json')).with_indifferent_access
 valid_addresses = addresses_json[:addresses]
+
+# the number of valid addresses in the json file is 99, which nicely allows us 
+# to have 33 vendors each with three addresses to choose from
+valid_addresses.in_groups_of(33, false).each do |group|
+
+  # create vendor to own each group of addresses
+  vendor = Vendor.new
+  vendor.name = "#{Faker::Company.name} #{Faker::Company.suffix}"
+  vendor.industry = Faker::Company.industry
+  vendor.logo = Faker::Company.logo
+  vendor.save
+end
