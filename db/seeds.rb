@@ -90,8 +90,7 @@ valid_addresses.in_groups_of(33, false).each do |group|
     # create shipment for order
     shipment = Shipment.new
     shipment.addresses << vendor.addresses.sample
-    shipment.order = order
-    shipment.save!
+    order.shipments << shipment
 
     case order.shipment_state
       when 'shipped'
@@ -113,6 +112,8 @@ valid_addresses.in_groups_of(33, false).each do |group|
     end
 
     shipment.shipped_at = reference_date - rand(2..5).days
+
     shipment.save!
+    order.save!
   end
 end

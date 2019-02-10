@@ -3,8 +3,7 @@ class Order < ApplicationRecord
   has_many :line_items
   has_many :shipments
 
-  before_validation :update_totals
-  before_create :generate_order_number
+  before_create :generate_order_number, :update_totals
 
   def update_totals
    self.total = self.line_items.map(&:price).sum
