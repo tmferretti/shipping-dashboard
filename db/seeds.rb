@@ -6,3 +6,7 @@ Address.delete_all
 Order.delete_all
 LineItem.delete_all
 Shipment.delete_all
+
+# load file of valid addresses
+addresses_json = ActiveSupport::JSON.decode(File.read('db/valid_addresses.json')).with_indifferent_access
+valid_addresses = addresses_json[:addresses]
