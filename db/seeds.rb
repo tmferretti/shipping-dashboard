@@ -12,6 +12,11 @@ def generate_clean_phone_number
   "(#{Faker::PhoneNumber.area_code}) #{rand(10..99)}#{rand(1..9)}-#{rand(1000..9999)}"
 end
 
+def late_shipment?
+  # a shipment will be late 5% of the time
+  rand(0..1000) >= 950 ? true : false
+end
+
 
 # Delete prexisting data in tables. Delete wont run any callbacks so its much faster, given this seeds
 # file is populating tables with alot of rows, sure. Typically I will use destroy in production code 
@@ -49,7 +54,7 @@ valid_addresses.in_groups_of(33, false).each do |group|
     address.city = valid_address[:city]
     address.zipcode = valid_address[:postalCode]
     address.state = valid_address[:state]
-    address.country = "USA" # for now, the valid address file only has US data, Im downloading a global one, but its massive (10GB) and will need to be parsed because *I think* I dont need that many addresses for this
+    address.country = 'USA' # for now, the valid address file only has US data, Im downloading a global one, but its massive (10GB) and will need to be parsed because *I think* I dont need that many addresses for this
 
     # lat and lng for geocoding
     address.latitude = valid_address[:coordinates][:lat]
@@ -86,21 +91,25 @@ valid_addresses.in_groups_of(33, false).each do |group|
     shipment.addresses << vendor.addresses.sample
 
     case order.shipment_state
-      when "shipped"
+      when 'shipped'
         # future
-        reference_date = Faker::Date.between(3.days.from_now, Date.today)
-      when "pending_shipment"
+        reference_date = Faker::Date.between(3.days.from_now, Date.tomorrow)
+      when 'pending_shipment'
         # future
-        reference_date = Faker::Date.between(6.days.from_now, Date.today)
-      when "delivered"
+        reference_date = Faker::Date.between(6.days.from_now, Date.tomorrow)
+      when 'delivered'
         # past
-        reference_date = Faker::Date.between(100.days.ago, Date.today)
+        reference_date = Faker::Date.between(100.days.ago, 5.days.ago)
         shipment.delivered_at = reference_date + rand(-3..3).days
     end
 
-    shipment.est_arrival_date = reference_date
-    shipment.shipped_at = reference_date - rand(2..5).days
+    if late_shipment? && order.shipment_state != 'delivered'
+      shipment.est_arrival_date = reference_date + rand(5..15).days
+    else
+      shipment.est_arrival_date = reference_date
+    end
 
+    shipment.shipped_at = reference_date - rand(2..5).days
     shipment.order = order
     shipment.save
   end
