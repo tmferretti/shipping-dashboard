@@ -5,7 +5,6 @@ module api
     expose(:address) { Address.find(params[:id]) }
 
     def index
-      @addresses = Address.all
     end
 
     def show
@@ -18,8 +17,7 @@ module api
     end
 
     def destroy
-      @address.active = false
-      @address.save
+      @address.destroy
     end
   end
 end
