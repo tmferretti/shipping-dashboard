@@ -70,7 +70,7 @@ valid_addresses.in_groups_of(33, false).each do |group|
   end
 
   # create orders for the vendor
-  200.times do
+  2_000.times do
     order = Order.new
     order.shipment_state = generate_shipment_state
     order.vendor = vendor
