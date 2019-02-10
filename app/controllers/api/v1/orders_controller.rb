@@ -1,4 +1,4 @@
-module API
+module Api
   module V1
     class OrdersController < ApplicationController
       expose(:orders) { Order.where(vendor_id: params[:vendor_id]) }

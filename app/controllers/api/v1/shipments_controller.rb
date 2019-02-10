@@ -1,4 +1,4 @@
-module API
+module Api
   module V1
     class ShipmentsController < ApplicationController
       expose(:shipments) { Shipment.where(vendor_id: params[:vendor_id]) } if params[:vendor_id]

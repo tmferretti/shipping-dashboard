@@ -1,4 +1,4 @@
-module API
+module Api
   module V1
     class LineItemsController < ApplicationController
       expose(:line_items) { LineItem.where(order_id: params[:order_id]) }

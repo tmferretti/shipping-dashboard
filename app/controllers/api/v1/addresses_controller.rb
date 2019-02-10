@@ -1,4 +1,4 @@
-module API
+module Api
   module V1
     class AddressesController < ApplicationController
       expose(:addresses) { Address.where(shipment_id: params[:shipment_id]) } if params[:shipment_id]
