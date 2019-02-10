@@ -1,6 +1,8 @@
 module api
   class OrdersController < ApplicationController
-    before_filter :load_order, :except => [:index, :create]
+    expose(:orders) { Order.where(vendor_id: params[:vendor_id]) }
+    expose(:order) { Order.find(params[:id]) }
+
     def index
     end
 
@@ -14,12 +16,6 @@ module api
     end
 
     def destroy
-    end
-
-    private
-
-    def load_order
-      @order = Order.find_by(id: params[:id])
     end
   end
 end

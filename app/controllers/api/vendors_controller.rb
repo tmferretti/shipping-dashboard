@@ -1,9 +1,9 @@
 module api
   class VendorsController < ApplicationController
-    before_filter :load_vendor, :except => [:index, :create]
+    expose(:vendors) { Vendor.all }
+    expose(:vendor) { Vendor.find(params[:id]) }
 
     def index
-      @vendors = Vendor.all
     end
 
     def show
@@ -17,11 +17,5 @@ module api
 
     def destroy
     end
-  end
-
-  private
-
-  def load_vendor
-    @vendor = Vendor.find_by(id: params[:id])
   end
 end

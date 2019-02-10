@@ -1,9 +1,10 @@
 module api
   class ShipmentsController < ApplicationController
+    expose(:shipments) { Shipment.where(vendor_id: params[:vendor_id]) } if params[:vendor_id]
+    expose(:shipments) { Shipment.where(order_id: params[:order_id]) } if params[:order_id]
+    expose(:shipment) { Shipment.where(id: params[:id]) }
 
     def index
-      @vendor = Order.find_by(params[:vendor_id])
-      @shipments = @vendor.shipments
     end
 
     def show
