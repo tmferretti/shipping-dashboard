@@ -1,3 +1,18 @@
+# Helper methods for seeds file
+def generate_shipment_state
+  %("pending_shipment" "shipped" "delivered").sample
+end
+
+def generate_clean_phone_number
+  # Faker gem's phone number method will create a phone number adhering to a couple different phone number
+  # formats. I wrote this helper method to generate fake phone numbers in the format that
+  # I would have them be cleaned to before entering the DB from a form
+
+  Faker::Config.locale = 'en-US'
+  "(#{Faker::PhoneNumber.area_code}) #{rand(10..99)}#{rand(1..9)}-#{rand(1000..9999)}"
+end
+
+
 # Delete prexisting data in tables. Delete wont run any callbacks so its much faster, given this seeds
 # file is populating tables with alot of rows, sure. Typically I will use destroy in production code 
 # outside of a seeds file.
