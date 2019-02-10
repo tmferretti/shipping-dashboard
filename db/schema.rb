@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_10_015905) do
+ActiveRecord::Schema.define(version: 2019_02_10_041313) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,7 +48,6 @@ ActiveRecord::Schema.define(version: 2019_02_10_015905) do
     t.string "number"
     t.decimal "total", precision: 8, scale: 2
     t.string "shipment_state"
-    t.integer "shipment_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "vendor_id"
@@ -63,7 +62,6 @@ ActiveRecord::Schema.define(version: 2019_02_10_015905) do
 
   create_table "shipments", force: :cascade do |t|
     t.string "tracking_num"
-    t.integer "ship_addr_id"
     t.datetime "est_arrival_date"
     t.datetime "shipped_at"
     t.datetime "delivered_at"
