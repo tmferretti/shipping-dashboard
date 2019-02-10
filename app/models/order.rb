@@ -8,7 +8,6 @@ class Order < ApplicationRecord
 
   def update_totals
    self.total = self.line_items.map(&:price).sum
-   self.save
   end
 
   def generate_order_number
