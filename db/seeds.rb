@@ -51,6 +51,10 @@ valid_addresses.in_groups_of(33, false).each do |group|
     address.state = valid_address[:state]
     address.country = "USA" # for now, the valid address file only has US data, Im downloading a global one, but its massive (10GB) and will need to be parsed because *I think* I dont need that many addresses for this
 
+    # lat and lng for geocoding
+    address.latitude = valid_address[:coordinates][:lat]
+    address.longitude = valid_address[:coordinates][:lng]
+
     address.phone = generate_clean_phone_number
     address.alternative_phone = generate_clean_phone_number
 
@@ -61,7 +65,7 @@ valid_addresses.in_groups_of(33, false).each do |group|
   end
 
   # create orders for the vendor
-  1_000.times do
+  2_000.times do
     order = Order.new
     order.shipment_state = generate_shipment_state
     order.save
