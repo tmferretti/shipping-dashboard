@@ -1,6 +1,6 @@
 # Helper methods for seeds file
 def generate_shipment_state
-  %("pending_shipment" "shipped" "delivered").sample
+  %w(pending_shipment shipped delivered).sample
 end
 
 def generate_clean_phone_number
