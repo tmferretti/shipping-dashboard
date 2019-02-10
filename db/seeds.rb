@@ -40,7 +40,7 @@ valid_addresses.in_groups_of(33, false).each do |group|
   vendor.name = "#{Faker::Company.name} #{Faker::Company.suffix}"
   vendor.industry = Faker::Company.industry
   vendor.logo = Faker::Company.logo
-  vendor.save
+  vendor.save!
   
   # create addresses for vendor
   group.each do |valid_address|
@@ -66,14 +66,15 @@ valid_addresses.in_groups_of(33, false).each do |group|
     address.company = vendor.name
     address.vendor = vendor
 
-    address.save
+    address.save!
   end
 
   # create orders for the vendor
-  2_000.times do
+  200.times do
     order = Order.new
     order.shipment_state = generate_shipment_state
-    order.save
+    order.vendor = vendor
+    order.save!
 
     # create line_items for order
     rand(1..5).times do
@@ -83,12 +84,14 @@ valid_addresses.in_groups_of(33, false).each do |group|
       line_item.product_name = Faker::Commerce.product_name
       line_item.price = Faker::Commerce.price.to_d
 
-      line_item.save
+      line_item.save!
     end
 
     # create shipment for order
     shipment = Shipment.new
     shipment.addresses << vendor.addresses.sample
+    shipment.order = order
+    shipment.save!
 
     case order.shipment_state
       when 'shipped'
@@ -110,7 +113,6 @@ valid_addresses.in_groups_of(33, false).each do |group|
     end
 
     shipment.shipped_at = reference_date - rand(2..5).days
-    shipment.order = order
-    shipment.save
+    shipment.save!
   end
 end
