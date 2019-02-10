@@ -40,18 +40,24 @@ valid_addresses.in_groups_of(33, false).each do |group|
   # create address for vendor
   group.each do |valid_address|
     address = Address.new
+
     address.first_name = Faker::Name.first_name
     address.last_name = Faker::Name.last_name
+
     address.address1 = valid_address[:address1]
     address.address2 = valid_address[:address2]
     address.city = valid_address[:city]
     address.zipcode = valid_address[:postalCode]
-    address.phone = generate_clean_phone_number
-    address.alternative_phone = generate_clean_phone_number
-    address.company = vendor.name
     address.state = valid_address[:state]
     address.country = "USA" # for now, the valid address file only has US data, Im downloading a global one, but its massive (10GB) and will need to be parsed because *I think* I dont need that many addresses for this
+
+    address.phone = generate_clean_phone_number
+    address.alternative_phone = generate_clean_phone_number
+
+    address.company = vendor.name
     address.vendor = vendor
+
+    address.save
   end
 
   # create orders for the vendor
@@ -63,9 +69,12 @@ valid_addresses.in_groups_of(33, false).each do |group|
     # create line_items for order
     rand(1..5).times do
       line_item = LineItem.new
+
       line_item.order = order
       line_item.product_name = Faker::Commerce.product_name
       line_item.price = Faker::Commerce.price.to_d
+
+      line_item.save
     end
 
     # create shipment for order
