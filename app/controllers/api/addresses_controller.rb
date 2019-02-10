@@ -1,11 +1,12 @@
 module api
   class AddressesController < ApplicationController
+    before_filter :load_address, :except => [:index, :create]
+
     def index
       @addresses = Address.all
     end
 
     def show
-      @address = Address.find_by(id: params[:id])
     end
 
     def update
@@ -15,9 +16,14 @@ module api
     end
 
     def destroy
-      address = Address.find_by(id: params[:id])
-      address.active = false
-      address.save
+      @address.active = false
+      @address.save
+    end
+
+    private
+
+    def load_address
+      @address = Address.find_by(id: params[:id])
     end
   end
 end
