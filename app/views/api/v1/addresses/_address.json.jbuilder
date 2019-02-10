@@ -13,4 +13,4 @@ json.country address.country
 json.latitude address.latitude
 json.longitude address.longitude
 
-json.partial! 'vendors/vendor', vendor: address.vendor
+json.partial! 'api/v1/vendors/vendor', vendor: address.vendor
