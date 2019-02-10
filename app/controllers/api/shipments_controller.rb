@@ -1,6 +1,9 @@
 module api
   class ShipmentsController < ApplicationController
+
     def index
+      @vendor = Order.find_by(params[:vendor_id])
+      @shipments = @vendor.shipments
     end
 
     def show
@@ -13,6 +16,7 @@ module api
     end
 
     def destroy
+      @shipment.destroy
     end
   end
 end

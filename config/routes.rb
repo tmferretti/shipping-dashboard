@@ -10,6 +10,7 @@ Rails.application.routes.draw do
             end
           end
 
+          resources :shipments, :only => :index
           resources :addresses, :only => [:create, :index]
         end
       end
