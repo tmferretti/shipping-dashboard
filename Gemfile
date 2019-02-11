@@ -9,7 +9,7 @@ gem 'puma', '~> 3.11'
 gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '>= 1.1.0', require: false
 # gem 'bcrypt', '~> 3.1.7'
-# gem 'rack-cors'
+gem 'rack-cors'
 gem 'versionist', '~> 1.7.0'
 gem 'geocoder', '~> 1.5.1'
 
