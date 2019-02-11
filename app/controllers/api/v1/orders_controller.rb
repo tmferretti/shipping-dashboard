@@ -3,6 +3,10 @@ module Api
     class OrdersController < ApplicationController
       def index
         @orders = find_orders(params[:vendor_id])
+
+        # frontend expects content-range header for pagination
+        set_content_range('orders', (JSON.parse params[:range]), @orders.count)
+
         render 'index.json.jbuilder'
       end
 

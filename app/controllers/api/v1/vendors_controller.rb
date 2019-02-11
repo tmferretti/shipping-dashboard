@@ -5,7 +5,7 @@ module Api
         @vendors = get_vendors
 
         # frontend expects content-range header for pagination
-        set_content_range('vendors', params[:range], @vendors.count)
+        set_content_range('vendors', (JSON.parse params[:range]), @vendors.count)
 
         render 'index.json.jbuilder'
       end
