@@ -12,7 +12,9 @@ module Api
       end
 
       def create
-        order = OrderCreator.create_order(order_params)
+        @order = OrderCreator.create_order(order_params)
+        # render :action => :show
+        render :show
       end
 
       def update
@@ -24,7 +26,7 @@ module Api
       private
 
       def order_params
-        params.require(:vendor_id, :tracking_number).permit(:order_number)
+        params.require(:vendor_id, :tracking_num, :address_id).permit(:order_num, :line_items)
       end
 
       def find_order(id)

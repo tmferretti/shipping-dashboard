@@ -22,4 +22,13 @@ class Order < ApplicationRecord
     self.number = random
     self.number
   end
+
+  def create_fake_line_items
+    rand(2..5).times do
+      self.line_items.build(
+        product_name: Faker::Commerce.product_name,
+        price: Faker::Commerce.price.to_d
+        )
+    end
+  end
 end
