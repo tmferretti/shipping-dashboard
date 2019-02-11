@@ -11,6 +11,8 @@ class Order < ApplicationRecord
 
   def generate_order_number
     # quick method to generate unique order numbers
+    return if self.number
+
     unique = false
     while !unique
       random = "N#{Array.new(9) { rand(9) }.join}"
