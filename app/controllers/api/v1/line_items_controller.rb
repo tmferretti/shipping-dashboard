@@ -1,9 +1,6 @@
 module Api
   module V1
     class LineItemsController < ApplicationController
-      # expose(:line_items) { LineItem.where(order_id: params[:order_id]) }
-      # expose(:line_item) { LineItem.find(params[:id]) }
-
       def index
         @line_items = find_line_items(params[:order_id])
         render 'index.json.jbuilder'
