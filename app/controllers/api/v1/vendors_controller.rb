@@ -1,14 +1,13 @@
 module Api
   module V1
     class VendorsController < ApplicationController
-      expose(:vendors) { Vendor.all }
-      expose(:vendor) { Vendor.find(params[:id]) }
-
       def index
+        @vendors = get_vendors
         render 'index.json.jbuilder'
       end
 
       def show
+        @vendor = find_vendors(params[:id])
         render 'show.json.jbuilder'
       end
 
@@ -19,6 +18,16 @@ module Api
       end
 
       def destroy
+      end
+
+      private
+
+      def get_vendors
+        Vendor.all
+      end
+
+      def find_vendor(id)
+        Vendor.find(id)
       end
     end
   end
