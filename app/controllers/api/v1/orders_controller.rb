@@ -12,12 +12,19 @@ module Api
       end
 
       def create
+        order = OrderCreator.create_order(order_params)
       end
 
       def update
       end
 
       def destroy
+      end
+
+      private
+
+      def order_params
+        params.require(:vendor_id, :tracking_number).permit(:order_number)
       end
 
       def find_order(id)
