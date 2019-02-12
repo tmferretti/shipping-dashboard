@@ -1,0 +1,4 @@
+json.tracking_num shipment.tracking_num
+json.est_arrival_date shipment.est_arrival_date
+json.shipped_at shipment.shipped_at
+json.delivered_at shipment.delivered_at
