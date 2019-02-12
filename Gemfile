@@ -12,6 +12,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'rack-cors'
 gem 'versionist', '~> 1.7.0'
 gem 'geocoder', '~> 1.5.1'
+gem 'descriptive_statistics'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'

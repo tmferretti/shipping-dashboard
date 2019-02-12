@@ -5,6 +5,10 @@ class Order < ApplicationRecord
 
   before_create :generate_order_number
 
+  scope :critically_late_orders, shipments.where('est_arrival_date >= ?', Shipments.all.collect{|ship| ship.est_arrival_date}.mean * 2)
+  scope :late_orders, shipments.where('est_arrival_date <= and est_arrival_date >= ?', Shipments.all.collect{|ship| ship.est_arrival_date}.mean * 2, Shipments.all.collect{|ship| ship.est_arrival_date}.mean * 1.5)
+  scope :on_time_orders, shipments.where('est_arrival_date < ?', Shipments.all.collect{|ship| ship.est_arrival_date}.mean * 1.5)
+
   def update_totals
     self.total = self.line_items.map(&:price).sum
   end
@@ -31,4 +35,5 @@ class Order < ApplicationRecord
         )
     end
   end
+
 end
