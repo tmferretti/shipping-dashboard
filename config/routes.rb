@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   namespace :api do
-    api_version(:module => "V1", :header => {:name => "Accept", :value => "application/vnd.negotiatus-challenge.com; version=1, application/json"}) do
+    api_version(:module => "V1", :header => {:name => "Accept", :value => "application/json, application/vnd.negotiatus-challenge.com; version=1"}) do
       shallow do
         resources :vendors do
           resources :orders do
